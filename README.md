@@ -1,9 +1,9 @@
 # THP-BDX by bab 
 
 
-A faire : 
+# SETUP : 
 
-http://installfest.railsbridge.org/installfest/linux
+Install fest : http://installfest.railsbridge.org/installfest/linux
 
-curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+Pour nodejs : curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
