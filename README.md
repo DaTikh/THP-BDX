@@ -1,7 +1,9 @@
 # THP-BDX by bab 
 
 
-# SETUP : 
+# SETUP tips : 
+
+Unlock ubuntu : ubuntu-restricted-extras
 
 Install fest : http://installfest.railsbridge.org/installfest/linux
 
