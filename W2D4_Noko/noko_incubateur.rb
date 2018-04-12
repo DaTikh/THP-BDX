@@ -21,11 +21,16 @@ end
 
 def get_incubators_list()
   main_page = Nokogiri::HTML(open("http://www.alloweb.org/annuaire-startups/annuaire-incubateurs-startups/"))
+  last = main_page.css("/html/body/div[1]/div/div/div/div[2]/div[1]/div/nav/div/a[5]").text.to_i
   list = main_page.css("a.listing-row-image-link")
   lists = []
+  last.times do |i|
+    main_page = Nokogiri::HTML(open("http://www.alloweb.org/annuaire-startups/annuaire-incubateurs-startups/page/#{i}"))
     list.each do |list|
       lists << list["href"]
     end
+    i += 1
+  end
     return lists
 end
 
