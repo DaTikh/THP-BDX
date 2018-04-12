@@ -3,12 +3,44 @@ require 'nokogiri'
 require 'open-uri'
 require 'yaml'
 
-# def get_incubator_link()
-page = Nokogiri::HTML(open("http://www.alloweb.org/annuaire-startups/annuaire-incubateurs-startups/wai-paris-we-are-innovation-incubateur-bnp-paribas/"))
-link = page.css("div.wpb_wrapper p a")
+def get_incubator_link(url)
+  page = Nokogiri::HTML(open("#{url}"))
+  link = page.css("div.wpb_wrapper p a")
+  links = []
+    link.each do |link|
+    links << link["href"]
+    end
+  return links[6]
+end
 
- puts link
+def get_incubator_name(url)
+  app_page = Nokogiri::HTML(open("#{url}"))
+  name = app_page.css("div.detail-banner-wrapper h1").text.slice!(1..-1).gsub!("  Revendication ","")
+  return name
+end
 
-# end
-#
-# get_incubator_link()
+def get_incubators_list()
+  main_page = Nokogiri::HTML(open("http://www.alloweb.org/annuaire-startups/annuaire-incubateurs-startups/"))
+  list = main_page.css("a.listing-row-image-link")
+  lists = []
+    list.each do |list|
+      lists << list["href"]
+    end
+    return lists
+end
+
+def perform
+  urls = []
+  data_base = []
+  zlist = get_incubators_list
+    zlist.map do |i|
+      urls << i
+    end
+    urls.each do |url|
+      name = get_incubator_name(url)
+      link = get_incubator_link(url)
+      data_base << [name, link]
+    end
+  return data_base
+end
+print perform
