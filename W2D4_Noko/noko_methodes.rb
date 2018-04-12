@@ -3,7 +3,6 @@ require 'nokogiri'
 require 'open-uri'
 require 'yaml'
 
-
 def get_all_the_urls_of_val_doise_townhalls()
   page = Nokogiri::HTML(open("http://annuaire-des-mairies.com/val-d-oise.html"))
   links_list = []
@@ -13,7 +12,6 @@ def get_all_the_urls_of_val_doise_townhalls()
   end
   return links_list
 end
-
 
 def get_the_email_of_a_townhal_from_its_webpage(url)
   mairie_info = {}
@@ -36,7 +34,7 @@ def camel_name(a)
   return b.join("")
   else
   return a.downcase!
-end
+  end
 end
 
 def perform()
