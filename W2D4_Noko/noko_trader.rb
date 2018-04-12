@@ -3,26 +3,22 @@ require 'nokogiri'
 require 'open-uri'
 require 'yaml'
 
-page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all/"))
-currency = page.css("td.currency-name")
-
-currencies = []
-prices = []
+def get_data
+  page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all/"))
+  currency = page.css("td.currency-name")
+  values = page.css("a.price")
+  currencies = []
+  prices = []
 
   currency.each do |curr|
-   curr = curr.to_s.slice!(44..-1)
-   cut = curr.index(">")
-   curr = curr.slice!(0..(cut-1)).gsub!("\"","")
-   currencies << curr
-   end
-values = page.css("a.price")
-  values.each do |val|
-  val = values.text
-  prices << val
+    currencies << curr['data-sort']
   end
-# print currencies
-# print prices
 
-print currencies.length
-print prices.length
-print currencies.product(prices)
+  values.each do |val|
+    prices << val['data-usd']
+  end
+
+  data = Hash[currencies.zip(prices.map {|i| i.include?(',') ? (i.split /, /) : i})]
+end
+
+print get_data
